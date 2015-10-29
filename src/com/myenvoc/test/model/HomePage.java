@@ -1,6 +1,8 @@
 package com.myenvoc.test.model;
 
-import com.myenvoc.test.locators.MyLocators;
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
 
 public class HomePage {
 	private final PageController pageEngine;
@@ -35,5 +37,15 @@ public class HomePage {
 		} else {
 			return false;
 		}
+	}
+
+	public void isWordAdded() {
+		pageEngine.findElementsByXPath(MyLocators.MY_WORDS_LIST_XPATH);
+
+	}
+
+	public void deleteWord() {
+		List<WebElement> tableElementsInThePage = pageEngine.findElementsByTagName("table");
+		System.out.println(tableElementsInThePage.size());
 	}
 }

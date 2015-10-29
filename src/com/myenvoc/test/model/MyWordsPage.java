@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 
-import com.myenvoc.test.locators.MyLocators;
-
 public class MyWordsPage {
 
 	private PageController pageController;
@@ -37,9 +35,9 @@ public class MyWordsPage {
 	public void typeWordForTranslation() {
 		WebElement wordForTranslation = pageController
 				.findElementByClassName(MyLocators.WORD_TYPING_FIELD_TO_TRANSLATE_PART_CLASS_NAME);
-		// .findElementByXPath(MyLocators.WORD_FIELD_FOR_TRANSLATION_PART_CLASS_NAME);
+				// .findElementByXPath(MyLocators.WORD_FIELD_FOR_TRANSLATION_PART_CLASS_NAME);
 
-		wordForTranslation.clear();
+		// wordForTranslation.clear();
 
 		String partOfTheWord = Constants.USER_WORD;
 		wordForTranslation.sendKeys(partOfTheWord);

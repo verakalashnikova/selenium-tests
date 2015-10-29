@@ -1,7 +1,5 @@
 package com.myenvoc.test.model;
 
-import com.myenvoc.test.locators.MyLocators;
-
 public class UserPage {
 	private final PageController pageEngine;
 

@@ -12,7 +12,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.myenvoc.test.model.AuthenticationRequiredException;
-import com.myenvoc.test.model.Constants;
 import com.myenvoc.test.model.HomePage;
 import com.myenvoc.test.model.MyWebDriver;
 import com.myenvoc.test.model.MyWordsPage;
@@ -43,13 +42,13 @@ public class WordCardVerificationTest {
 
 	@After
 	public void tearDown() throws Exception {
-		// webDriver.close();
+		webDriver.close();
 	}
 
 	// @Test
 	public void shouldNotGoToMywordsPageIfNotLoggedIn() throws NoSuchElementException, InterruptedException {
 		try {
-			pageController.goToTestUrl(Constants.TESTING_URL);
+			pageController.goToTestUrl();
 			homePage.goToMyWordsPage(user);
 			fail("Should not go here, as the user wasn't logged in");
 		} catch (AuthenticationRequiredException e) {
@@ -59,7 +58,7 @@ public class WordCardVerificationTest {
 
 	// @Test
 	public void shouldGoToMywordsPageIfLoggedIn() throws InterruptedException {
-		pageController.goToTestUrl(Constants.TESTING_URL);
+		pageController.goToTestUrl();
 		user.loginUser();
 		homePage.goToMyWordsPage(user);
 	}
@@ -72,7 +71,7 @@ public class WordCardVerificationTest {
 
 	// @Test
 	public void goToWordPage() throws Exception {
-		pageController.goToTestUrl(Constants.TESTING_URL);
+		pageController.goToTestUrl();
 		user.loginUser();
 		homePage.goToMyWordsPage(user);
 		myWordsPage.typeWordForTranslation();
@@ -80,71 +79,128 @@ public class WordCardVerificationTest {
 		assertEquals(wordPage.amInWordPage(), true);
 	}
 
-	@Ignore
+	// @Test
 	public void newHoveredTranslationIsDisplayedInWordTranslationSection() {
-		pageController.goToTestUrl(Constants.TESTING_URL);
+		pageController.goToTestUrl();
 		user.loginUser();
 		homePage.goToMyWordsPage(user);
 		myWordsPage.typeWordForTranslation();
 		myWordsPage.selectUserWordFromSuggestedDialogOrTapTranslateButton();
 		wordPage.switchOnTranslationTab();
-		// TODO: I was not able to implement this method because the webdriver
-		// cannot see the value in the field for translation
-		assertEquals(wordPage.hoverNewTranslationandCheckItInTranslationsField(), true);
+		assertEquals(wordPage.hoverTranslationAndCheckItInTranslationsField(), true);
 
 	}
 
-	@Ignore
+	// @Test
 	public void newHoveredDefinitionIsDisplayedInWordDefinitionSection() {
-		pageController.goToTestUrl(Constants.TESTING_URL);
+		pageController.goToTestUrl();
 		user.loginUser();
 		homePage.goToMyWordsPage(user);
 		myWordsPage.typeWordForTranslation();
 		myWordsPage.selectUserWordFromSuggestedDialogOrTapTranslateButton();
 		wordPage.switchOnDefinitionTab();
+		assertEquals(wordPage.hoverDefinitionAndCheckItInDefinitionsField(), true);
 	}
 
-	@Ignore
-	public void newImageIsDisplayedInWordImageSection() {
-
-	}
-
-	@Test
-	public void newTranslationIsAdded() {
-		// Step 3. Tap Translation tab
-		// pageEngine.clickOnElement(MyLocators.TRANSLATION_TAB);
-		// Step 4. Tap Translation tab and select a new translation and add it
-		pageController.goToTestUrl(Constants.TESTING_URL);
+	// @Test
+	public void newTranslationFromSuggestedTranslationsIsAdded() {
+		pageController.goToTestUrl();
 		user.loginUser();
 		homePage.goToMyWordsPage(user);
 		myWordsPage.typeWordForTranslation();
 		myWordsPage.selectUserWordFromSuggestedDialogOrTapTranslateButton();
 		wordPage.switchOnTranslationTab();
+		assertEquals(wordPage.addOneOfSuggestedTranslations(), true);
 	}
 
-	@Ignore
-	public void newDefinitionIsAdded() {
-		// Step 5. Tap Definition tab and select a new definition and add it
+	// @Test
+	public void newDefinitionFromSuggestedDefinitionsIsAdded() {
+		pageController.goToTestUrl();
+		user.loginUser();
+		homePage.goToMyWordsPage(user);
+		myWordsPage.typeWordForTranslation();
+		myWordsPage.selectUserWordFromSuggestedDialogOrTapTranslateButton();
+		wordPage.switchOnDefinitionTab();
+		assertEquals(wordPage.addOneOfSuggestedDefinitions(), true);
 	}
 
-	@Ignore
-	public void newImageIsAdded() {// shouldAddImageToWordCard
-		// steps to reproduce
-		// Step 6. Tap Image tab. Select the image and click on it
+	// @Test
+	public void newImageIsAddedByClickOnImagePlace() {// shouldAddImageToWordCard
+		pageController.goToTestUrl();
+		user.loginUser();
+		homePage.goToMyWordsPage(user);
+		myWordsPage.typeWordForTranslation();
+		myWordsPage.selectUserWordFromSuggestedDialogOrTapTranslateButton();
+		wordPage.switchOnImageTabByClickOnImagePlace();
+		assertEquals(wordPage.addImage(), true);
 	}
 
-	@Ignore
-	public void newTagIsAdded() {
-		// Step 7. Type a tag in the "tag" field. Example: "fruit"
+	// @Test
+	public void newImageIsAddedFromImageTab() {// shouldAddImageToWordCard
+		pageController.goToTestUrl();
+		user.loginUser();
+		homePage.goToMyWordsPage(user);
+		myWordsPage.typeWordForTranslation();
+		myWordsPage.selectUserWordFromSuggestedDialogOrTapTranslateButton();
+		wordPage.switchOnImageTab();
+		assertEquals(wordPage.addImage(), true);
 	}
 
-	@Ignore
-	public void isWordaddedToUserDictionaryTest() {
+	// @Test
+	public void shouldWordBeAddedToUserDictionaryTest() {
+		pageController.goToTestUrl();
+		user.loginUser();
+		homePage.goToMyWordsPage(user);
+		myWordsPage.typeWordForTranslation();
+		myWordsPage.selectUserWordFromSuggestedDialogOrTapTranslateButton();
+		wordPage.switchOnTranslationTab();
+		wordPage.addOneOfSuggestedTranslations();
+		wordPage.switchOnDefinitionTab();
+		wordPage.addOneOfSuggestedDefinitions();
+		wordPage.switchOnImageTabByClickOnImagePlace();
+		wordPage.addImage();
+		wordPage.addTag();
+		wordPage.addWord();
+		homePage.isWordAdded();
+	}
 
-		// Step 8. Click on Add button
+	// @Test
+	public void shouldNotWordBeAddedToUserDictionaryTest() {
+		// TODO: check that the word is not added
+		pageController.goToTestUrl();
+		user.loginUser();
+		homePage.goToMyWordsPage(user);
+		myWordsPage.typeWordForTranslation();
+		myWordsPage.selectUserWordFromSuggestedDialogOrTapTranslateButton();
+		wordPage.switchOnTranslationTab();
+		wordPage.addOneOfSuggestedTranslations();
+		wordPage.switchOnDefinitionTab();
+		wordPage.addOneOfSuggestedDefinitions();
+		wordPage.switchOnImageTabByClickOnImagePlace();
+		wordPage.addImage();
+		wordPage.addTag();
+		wordPage.cancelAddingWord();
+		homePage.isWordAdded(); // test should not pass because the word should
+								// not be added
+	}
 
-		// assertArrayEquals(USER_WORD, actuals);//(expecteds, actuals);
-		// fail("Not yet implemented");
+	@Test
+	public void shouldBeWordDeletedFromMyWordsTableTest() {
+		pageController.goToTestUrl();
+		user.loginUser();
+		homePage.goToMyWordsPage(user);
+		myWordsPage.typeWordForTranslation();
+		myWordsPage.selectUserWordFromSuggestedDialogOrTapTranslateButton();
+		wordPage.switchOnTranslationTab();
+		wordPage.addOneOfSuggestedTranslations();
+		wordPage.switchOnDefinitionTab();
+		wordPage.addOneOfSuggestedDefinitions();
+		wordPage.switchOnImageTabByClickOnImagePlace();
+		wordPage.addImage();
+		wordPage.addTag();
+		wordPage.addWord();
+		homePage.isWordAdded();
+		homePage.deleteWord();
 	}
 
 }

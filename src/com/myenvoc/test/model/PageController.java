@@ -16,8 +16,8 @@ public class PageController {
 		this.webDriver = webDriver;
 	}
 
-	public void goToTestUrl(String url) {
-		webDriver.get(url);
+	public void goToTestUrl() {
+		webDriver.get(Constants.TESTING_URL);
 		webDriver.manage().window().maximize();
 	}
 
@@ -32,18 +32,19 @@ public class PageController {
 		return webElement;
 	}
 
-	public void howerOverElement(String xpathExpression) {
+	public void hoverOverElement(String xpathExpression) {
 		Actions builder = new Actions(webDriver);
 		WebElement element = findElementByXPath(xpathExpression);
 		builder.moveToElement(element).perform();
 	}
 
-	public List<WebElement> findElementsByXPath(String suggestedWordsPopUp) {
+	public List<WebElement> findElementsByXPath(String xpathExpression) {
 		List<WebElement> results = (new WebDriverWait(webDriver, Constants.TIME_OUT_IN_SECONDS))
-				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("xpathExpression")));
-		if (results == null) {
-			throw new ElementNotFoundException(String.format("Can't find element by id '%s'", suggestedWordsPopUp));
-		}
+				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(xpathExpression)));
+		// if (results == null) {
+		// throw new ElementNotFoundException(String.format("Can't find element
+		// by id '%s'", suggestedWordsPopUp));
+		// }
 		return results;
 	}
 
@@ -67,6 +68,18 @@ public class PageController {
 	public List<WebElement> findElementsByClass(String className) {
 		return (new WebDriverWait(webDriver, Constants.TIME_OUT_IN_SECONDS))
 				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className(className)));
+	}
+
+	public List<WebElement> findElementsByTagName(String tagName) {
+		return (new WebDriverWait(webDriver, Constants.TIME_OUT_IN_SECONDS)
+				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.tagName(tagName))));
+
+	}
+
+	public WebElement findElementByTagName(String tagName) {
+		return (new WebDriverWait(webDriver, Constants.TIME_OUT_IN_SECONDS)
+				.until(ExpectedConditions.presenceOfElementLocated(By.tagName(tagName))));
+
 	}
 
 	public void driverWait(int seconds) throws InterruptedException {
