@@ -13,13 +13,9 @@ public class HomePage {
 
 	public void goToMyWordsPage(UserPage user) {
 		if (user.isUserLoggedIn()) {
-			// TODO: Go to MyWords Page
 			pageEngine.findElementByXPath(MyLocators.INTERFACE_LANGUAGE_OPTIONS).click();
 			pageEngine.findElementByXPath(MyLocators.INTERFACE_LANGUAGE_OPTIONS_ENGLISH).click();
-			// 7. Assumption: Library page is displayed
-			// go to My words page
 			pageEngine.findElementByLinkText(MyLocators.MY_WORDS_MENU_ITEM_TEXT_LINK).click();
-			// check that My words page is displayed
 			if (isUserOnHomePage()) {
 				// TODO: method has to be implemented
 			} else {

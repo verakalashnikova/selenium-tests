@@ -5,7 +5,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -61,12 +60,6 @@ public class WordCardVerificationTest {
 		pageController.goToTestUrl();
 		user.loginUser();
 		homePage.goToMyWordsPage(user);
-	}
-
-	@Ignore
-	public void wordCardUIVerificationTest() {
-		// I'm not sure what assertion should I make
-		fail("Not yet implemented");
 	}
 
 	// @Test
